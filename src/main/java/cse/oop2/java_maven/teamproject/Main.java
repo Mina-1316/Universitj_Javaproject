@@ -1,7 +1,4 @@
 package cse.oop2.java_maven.teamproject;
 
-public class User {
-
-
-
+public class Main {
 }

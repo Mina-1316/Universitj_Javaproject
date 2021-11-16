@@ -61,10 +61,17 @@ public class GameHelper {
                     }
                     if(x>0&(location%gridLength==0)){
                         success=false;
-                    }
+                    }/*else{
+                        success=false;
+                    }*/
                 }
             }
         }
+        //Debug code
+        /*if(attempts>=200){
+            System.out.println("Error: too many attempts to place");
+            System.exit(-5);
+        }*/
 
         int x=0;
         int row=0;

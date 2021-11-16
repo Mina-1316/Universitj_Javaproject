@@ -14,10 +14,11 @@ public class SimpleDotComGame {
 
         SimpleDotCom theDotCom=new SimpleDotCom();
         int randomNum=(int)(Math.random()*5);
-        System.out.format("(randomNumber = %s)%n",randomNum);
+        //System.out.format("(randomNumber = %s)%n",randomNum);
 
         int[] locations = {randomNum,randomNum+1,randomNum+2};
         ArrayList locationsArray = new ArrayList();
+        //ArrayList locationsArray = null;
         for(int i:locations){
             locationsArray.add(Integer.toString(i));
         }
@@ -27,8 +28,9 @@ public class SimpleDotComGame {
         boolean isAlive = true;
         while(isAlive){
             String guess = helper.getUserInput("enter a number");
-            String result= theDotCom.checkYourself((guess));
-
+            String result = theDotCom.checkYourself((guess));
+            
+            System.out.println(result);
             numOfGuesses++;
             if(result.equals("kill")){
                 isAlive=false;
