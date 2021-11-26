@@ -59,7 +59,7 @@ public class Student {
         this.stuName = stuName;
         this.Major = Major;
         this.stuRNum = stuPw;
-        this.stuNewPw = stuPw.substring(stuPw.length()-8,stuPw.length()-1);
+        this.stuNewPw = stuPw.substring(stuPw.length()-7,stuPw.length());
     }
  
     public void line(){  

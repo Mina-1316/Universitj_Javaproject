@@ -22,7 +22,7 @@ public class TestDrive {
    
    
     public static void login(){
-        final String idInputPattern = "^[A-Z]{1}[0-9]{3}$";
+        final String idInputPattern = "^[A-Z]{1}\\d{3}$";
        
         String idInput;
         while(true){
@@ -31,7 +31,7 @@ public class TestDrive {
             System.out.print("ID를 입력해주세요 : ");
             idInput = getConsoleInput();
            
-            if(!Pattern.matches(idInput, idInputPattern)){
+            if(!Pattern.matches(idInputPattern, idInput)){
                 System.out.println("학번 입력이 잘못되었습니다. 다시 입력해 주세요.");
             }else{
                 break;
@@ -50,7 +50,7 @@ public class TestDrive {
                     System.out.print("비밀번호를 입력하세요 : ");
                     String pwInput = getConsoleInput();
                    
-                    if(!studentToLogin.getStuRNum().equals(pwInput)){
+                    if(!studentToLogin.getStuNewPw().equals(pwInput)){
                         System.out.println("비밀번호가 틀렸습니다.");
                     }else{
                         studentMenu(studentToLogin);
@@ -111,7 +111,9 @@ public class TestDrive {
                     }
                 }
                 break;
-           
+            default:
+                System.out.println("학번 입력이 잘못되었습니다. 다시 입력해 주세요.");
+                break;
         }
     }
     }
