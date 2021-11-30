@@ -173,7 +173,8 @@ public class TestDrive {
             System.out.println("1. 출석부 조회");
             System.out.println("2. 성적 입력");
             System.out.println("3. 학생 명단");
-            System.out.println("4. 로그아웃");
+            System.out.println("4.비밀번호 변경");
+            System.out.println("5. 로그아웃");
             try{
                 menuInput = Integer.parseInt(getConsoleInput());}
             catch(NumberFormatException e){
@@ -183,16 +184,20 @@ public class TestDrive {
             switch(menuInput){
                 case 1:
                     //출석부 조회 메소드 호출
-                    loginBy.Allstudents();
+                    loginBy.Attendance();
                     break;
                 case 2:
                     loginBy.InputGrade();
                     break;
                 case 3:
                     //학생 명단 메소드 호출
-                    loginBy.Attendance();
+                    loginBy.Allstudents();
                     break;
                 case 4:
+                    //비밀번호 변경
+                    //loginBy.Attendance();
+                    break;
+                case 5:
                     //로그아웃
                     return;
             }
@@ -207,7 +212,8 @@ public class TestDrive {
             System.out.println("1. 강의 추가");
             System.out.println("2. 강의 삭제");
             System.out.println("3. 수강료 청구서 출력");
-            System.out.println("4. 로그아웃");
+            System.out.println("4. 비밀번호 변경");
+            System.out.println("5. 로그아웃");
             try{
                 menuInput = Integer.parseInt(getConsoleInput());}
             catch(NumberFormatException e){
@@ -228,6 +234,10 @@ public class TestDrive {
                     loginBy.printBill(lecturesArray, studentsArray);
                     break;
                 case 4:
+                    //비밀번호 변경 메소드 호출
+                    loginBy.changePassword();
+                    break;
+                case 5:
                     //로그아웃
                     return;
             }
@@ -291,13 +301,30 @@ public class TestDrive {
         //이 메소드는 테스트 프로그램의 초기화를 위해 생성되었습니다.
         //If you want to build this project, please comment out this method's call section.
         //만약 이 프로젝트를 빌드하고 싶으시다면, 이 메소드 호출부를 전부 주석처리 해주십시오.
+        try{
+            //Student(String stuId, String stuName, String Major, String stuPw) 
+            studentsArray.add(new Student("S101", "김기억", "컴퓨터소프트웨어공학과", "1111111111111"));
+            studentsArray.add(new Student("S102", "이기억", "컴퓨터소프트웨어공학과", "1111111111112"));
         
-        studentsArray.add(new Student("S101", "김기억", "컴퓨터소프트웨어공학과", "0001131372652"));
-        
-        
-        
-        
-        
+            //Professor(String Pnum, String RSnum,String ProfName,String Major)
+            professorsArray.add(new Professor("P101", "1111111111113", "김김김", "컴퓨터소프트웨어공학과"));
+            professorsArray.add(new Professor("P111", "1111111111101", "김김김", "컴퓨터소프트웨어공학과"));
+            professorsArray.add(new Professor("P102", "1111111111114", "이이이", "컴퓨터소프트웨어공학과"));
+            
+            //HEmployee(String name, String number, String residentnumber) 
+            hEmployeesArray.add(new HEmployee("관리자", "H300", "1111111111115"));
+            hEmployeesArray.add(new HEmployee("관리자2", "H301", "1111111111116"));
+            
+            // GEmployee(String idNumber, String name, String residentNumber) 
+            gEmployeesArray.add(new GEmployee("G101", "관리자", "1111111111117"));
+            gEmployeesArray.add(new GEmployee("G102", "관리자2", "1111111111118"));
+            
+            //Lecture(String LectName, String Major, String Introduction, String LectNum, int Credit, int Min, int Max, double Tuition, Professor professor)
+            lecturesArray.add(new Lecture("객체지향2", "컴퓨터소프트웨어", "객체", "10382", 4, 12, 30, 400000, professorsArray.get(0)));
+            lecturesArray.add(new Lecture("객체지향3", "컴퓨터소프트웨어", "객체", "10386", 4, 12, 30, 600000, professorsArray.get(1)));
+        }catch(Exception e){
+            System.err.println(e);
+        }
     }
     
 }

@@ -2,6 +2,7 @@ package cse.oop2.java_maven.teamproject;
 
 import static cse.oop2.java_maven.teamproject.TestDrive.getConsoleInput;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Student {
@@ -83,15 +84,20 @@ public class Student {
     }
  
  
-     public void enrolledClassList() { //개설된 강의 목록을 출력 
-
-         TestDrive.lecturesArray.forEach(e -> System.out.println(
+     public ArrayList<Lecture> enrolledClassList() { //개설된 강의 목록을 출력 
+        ArrayList<Lecture> searchedArray = new ArrayList<>(Arrays.asList(
+                TestDrive.lecturesArray.stream().filter(
+                        e->!e.isSemesterCheck()).toArray(Lecture[]::new)));
+         
+         
+        searchedArray.forEach(e -> System.out.println(
                 (TestDrive.lecturesArray.indexOf(e) + 1)+"번 강좌번호 :   " 
                 + e.getLectNum() + " 과목명 :   " 
                 + e.getLectName() + " 교수명 :   "
                 + e.getProfname()
         ));
 
+        return searchedArray;
     }
      
   public void signStud(){ 
@@ -101,7 +107,7 @@ public class Student {
         boolean bflag = false;
         
         while (!bflag) {
-            enrolledClassList(); //현재 개설된 강좌 리스트 출력
+            ArrayList<Lecture> searchedArray = enrolledClassList(); //현재 개설된 강좌 리스트 출력
 
             System.out.println(">> 신청하고자 하는 과목의 순서번호를 눌러주세요. , 0을 누르면 뒤로 돌아갑니다."); 
             line();
@@ -113,7 +119,7 @@ public class Student {
                  return;
              } //0을 누르면 뒤로 돌아간다.
 
-            if (isub > TestDrive.lecturesArray.size()) { //개설된 강의 배열의 크기를 넘어가면 오류 출력
+            if (isub > searchedArray.size()) { //개설된 강의 배열의 크기를 넘어가면 오류 출력
                 System.out.println("잘못 누르셨습니다. 다시 선택해주세요.");
             } 
             
@@ -123,10 +129,10 @@ public class Student {
             else { 
                 
              try{
-                Lecture lecture = TestDrive.lecturesArray.get(isub);
-                isub -= 1;                   
+                isub -= 1; 
+                Lecture lecture = searchedArray.get(isub);              
 
-                if (!overlapChk(TestDrive.lecturesArray.get(isub))) 
+                if (!overlapChk(lecture)) 
                 { //중복으로 신청을 안했으면 밑으로 내려온다.
                    
                     
@@ -137,7 +143,7 @@ public class Student {
                     }
                     
                         //최대 10학점 2,3,3,2
-                        if (18 - creditCount < TestDrive.lecturesArray.get(isub).getCredit()) { //남은 학점 0,1,2일때
+                        if (18 - creditCount < lecture.getCredit()) { //남은 학점 0,1,2일때
                             System.out.println("최대 18학점만 수강 가능합니다. 0번을 누르면 뒤로 돌아갑니다.");
                             System.out.println("현재 수강 신청한 학점 수: " +  creditCount);
 
@@ -152,30 +158,29 @@ public class Student {
                      int a = lecture.returnSizeOfCourse();
                      //System.out.println(a);
                      
-                     if(TestDrive.lecturesArray.get(isub).getMax() == a){
+                    if(lecture.getMax() == a){
                          System.out.println("최대 수강인원을 초과하였습니다. 뒤로 돌아갑니다.");
                          return;
-                     }
+                    }
                     
-                        this.setSubject(TestDrive.lecturesArray.get(isub)); //중복 아닐시 우선은 추가를 한다.
+                        this.setSubject(lecture); //중복 아닐시 우선은 추가를 한다.
                         lecture.getRegisteredStudentArray().add(this);   //registered 배열에 학생 객체를 넣는다.
                         lecture.addScore();                              //신청한 학생의 성적 공간만 null
                         
 
-                        str = "선택하신 과목은 " + lecture.getProfname() + "입니다. \n해당 교과목의 담당 교사는 "
-                                + TestDrive.lecturesArray.get(isub).getProfname() + "입니다.";
+                        str = "선택하신 과목은 " + lecture.getLectName()+ "입니다. \n해당 교과목의 담당 교사는 "
+                                + lecture.getProfname() + "입니다.";
                         line();
                         System.out.println(str);
+                        line();   
+                    }else { //중복 방지
                         line();
-                        
-                }else { //중복 방지
-                    line();
-                    System.out.println("이미 추가된 과목입니다.");
-                    line();
+                        System.out.println("이미 추가된 과목입니다.");
+                        line();
+                    }
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("개설된 강의만 신청이 가능합니다. 숫자를 다시 입력하세요");
                 }
-             }catch(IndexOutOfBoundsException e){
-                 System.out.println("개설된 강의만 신청이 가능합니다. 숫자를 다시 입력하세요");
-             }
             }
         }
     }
@@ -242,7 +247,7 @@ public class Student {
             if(lect==null){
                 System.out.println("강의가 존재하지 않습니다.");
             }else{
-                System.out.printf("강의 이름 : %s, 수강료 : %d", lect.getLectName(), i.getBillingAmount());
+                System.out.printf("강의 이름 : %s, 수강료 : %.1f", lect.getLectName(), i.getBillingAmount());
                 System.out.println();
                 totalCost+=i.getBillingAmount();
             }

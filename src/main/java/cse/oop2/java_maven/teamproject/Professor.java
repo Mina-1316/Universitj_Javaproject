@@ -21,7 +21,7 @@ public class Professor {
         this.RSnum=RSnum;
         this.ProfName=ProfName;
         this.Major=Major;
-        this.PW = RSnum.substring(RSnum.length()-8,RSnum.length()-1);
+        this.PW = RSnum.substring(RSnum.length()-7,RSnum.length());
     }
   public String getPW(){
       return PW;
@@ -129,12 +129,14 @@ public void setMajor(String Major){
         int i = sc.nextInt();
         //성적을 입력하세요 : 
         System.out.println("성적을 입력하세요: ");
-        char input = sc.nextLine().charAt(0);
+        //버퍼 플러싱
+        sc.nextLine();
+        String input = sc.nextLine();
         double score=0.0;
            
+        
             
-            
-        switch(input){
+        switch(input.charAt(0)){
             case 'A':
                    selectedLecture.setScore(i, 4.0);
                 break;
@@ -180,7 +182,7 @@ public void setMajor(String Major){
     //학생 출력
        System.out.println("===============출석부===============");
        
-           ArrayList<Student> studList = array.get(i).getRegisteredStudentArray();
+           ArrayList<Student> studList = selectedLecture.getRegisteredStudentArray();
            
            for(Student index : studList){
                System.out.println("학생이름: "+ index.getStuName()+

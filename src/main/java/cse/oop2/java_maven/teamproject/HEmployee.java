@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class HEmployee {
-    private BufferedReader in;    
+    private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));;   
     private int inputNum;
     private String name;      //직원개인정보
     private String number;
@@ -15,15 +15,12 @@ public class HEmployee {
     private static final int NUM_LEN=4;
 
     public HEmployee(String name, String number, String residentnumber) {
+        
+        
         this.name = name;
         this.number = number;
         this.residentnumber = residentnumber;
-        this.pw = residentnumber.substring(residentnumber.length()-8,residentnumber.length()-1);
-    }
-    
-    public HEmployee() {
-        in = new BufferedReader(new InputStreamReader(System.in));
-        inputNum=0;
+        this.pw = residentnumber.substring(residentnumber.length()-7,residentnumber.length());
     }
     
     public void setInputNum() throws IOException {

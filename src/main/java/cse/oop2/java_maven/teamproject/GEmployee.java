@@ -260,6 +260,7 @@ public class GEmployee{
                 findFirst().orElse(null);
         if(target==null){
             System.out.println("존재하지 않는 강의입니다.");
+            return;
         }
  
         if(!target.isCheck()){
@@ -270,6 +271,79 @@ public class GEmployee{
             System.out.println("강의가 개설된 강좌는 삭제할 수 없습니다.");
         }
  
+    }
+    
+    public void editCourse(ArrayList<Lecture> courseArray, ArrayList<Professor> professorArray){
+        final String courseNumPattern = "^[0-9]+$";
+ 
+        System.out.print("수정을 원하는 강좌의 강좌 번호를 입력해주세요 : ");
+        String input = getConsoleInput();
+ 
+        if(!Pattern.matches(courseNumPattern,input)){
+            System.out.println("숫자만 입력 가능합니다.");
+            return;
+        }
+ 
+        String finalInput = input;
+        Lecture target = courseArray.stream().filter(e->e.getLectNum().equals(finalInput)).
+                findFirst().orElse(null);
+        if(target==null){
+            System.out.println("존재하지 않는 강의입니다.");
+            return;
+        }
+        if(target.isCheck()){
+            System.out.println("이미 강의가 개설된 강좌입니다.");
+            System.out.println("강의가 개설된 강좌는 삭제할 수 없습니다.");
+            return;
+        }
+        System.out.println("선택한 강의의 내용은 다음과 같습니다. 수정할 데이터를 입력해주세요");
+        System.out.print("강의 이름 : " + target.getLectName() + " -> ");
+        target.setLectName(getConsoleInput());
+        System.out.print("강의 담당 교수 : " + target.getProfname() + " (교수 이름 입력)-> ");
+        
+        Professor professor = null;
+        String profNameInput = getConsoleInput();
+        
+        ArrayList<Professor> search = new ArrayList<Professor> (Arrays.asList(professorArray.stream().
+                            filter(e->e.getProfName().equals(profNameInput)).toArray(Professor[]::new)));
+ 
+        if(search.size()==0){
+            System.out.println("존재하지 않는 교수입니다.");
+        }else if((search.size()>=2)){
+            System.out.println("동명의 교수가 존재합니다.");
+            System.out.println("다음 교수 중 하나를 선택하시기 바랍니다.");
+            System.out.printf("%-12s|%-16s|%-40s\n", "교수번호", "이름", "학과");
+            search.forEach(e->System.out.printf("%-12s|%-16s|%-40s\n",e.getPnum(),e.getProfName(),e.getMajor()));
+ 
+                while(true) {
+                    System.out.print("교수 번호를 입력하세요 : ");
+                    input = getConsoleInput();
+ 
+                    String searchNum = input;
+                    professor = search.stream().findFirst().orElse(null);
+ 
+                    if(professor!=null)
+                        break;
+                    else{
+                        System.out.println("리스트에 존재하는 교수만 선택 가능합니다.");}
+                }
+        }else{
+            professor = search.stream().findFirst().orElse(null);
+        }
+        
+        target.setProfessor(professor);
+        try{
+            System.out.print("학점 : " + target.getCredit() + " -> ");
+            target.setCredit(Integer.parseInt(getConsoleInput()));
+        }catch(NumberFormatException e){
+            System.out.println("숫자만 입력 가능합니다.");
+        }
+        try{
+            System.out.print("수강료 : " + target.getTuition());
+            target.setTuition(Double.parseDouble(getConsoleInput()));
+        }catch(NumberFormatException e){
+            System.out.println("숫자만 입력 가능합니다.");
+        }
     }
  
     //청구서를 출력하는 메소드.
@@ -309,12 +383,32 @@ public class GEmployee{
  
     }
  
- 
+    public void setLecturesCheck(ArrayList<Lecture> lecturesArray){
+        System.out.print("강의 개설로 설정할 강좌의 번호를 입력하세요 : ");
+        String input1 = getConsoleInput();
+        
+        Lecture selectedLecture = lecturesArray.stream().filter(
+                e->e.getLectNum().equals(input1)).findFirst().orElse(null);
+        
+        if(selectedLecture==null){
+            System.out.println("존재하지 않는 강의입니다.");
+            return;
+        }
+        System.out.print("강의를 개설 상태로 지정하시겠습니까?(Y/N) : ");
+        String input2 = getConsoleInput();
+        if(input2.equals("Y")){
+            selectedLecture.setCheck(true);
+            selectedLecture.setSemesterCheck(true);
+            System.out.println("설정을 완료했습니다.");
+        }else{
+            System.out.println("메뉴로 돌아갑니다.");
+        }
+    }
+    
+    
     public boolean tryLogin(String passwordInput){
         return passwordInput.equals(password);
     }
- 
- 
     //Getter/Setter/underground running methods
     public String getIdNumber() {
         return idNumber;

@@ -16,8 +16,17 @@ public class Lecture {
    
  
     private boolean Check = false;     //개설 여부 (1번이라도 개설되면 TRUE)
+    private boolean semesterCheck = false;
     
     private Professor professor;
+
+    public boolean isSemesterCheck() {
+        return semesterCheck;
+    }
+
+    public void setSemesterCheck(boolean semesterCheck) {
+        this.semesterCheck = semesterCheck;
+    }
     
     public Professor getProfessor(){
         return professor;
