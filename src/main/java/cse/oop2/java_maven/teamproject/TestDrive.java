@@ -303,25 +303,28 @@ public class TestDrive {
         //만약 이 프로젝트를 빌드하고 싶으시다면, 이 메소드 호출부를 전부 주석처리 해주십시오.
         try{
             //Student(String stuId, String stuName, String Major, String stuPw) 
-            studentsArray.add(new Student("S101", "김기억", "컴퓨터소프트웨어공학과", "1111111111111"));
-            studentsArray.add(new Student("S102", "이기억", "컴퓨터소프트웨어공학과", "1111111111112"));
+            studentsArray.add(new Student("S101", "권성율", "전산학과", "9902101567848"));
+            studentsArray.add(new Student("S102", "김유민", "전자공학과", "0104042123456"));
+            studentsArray.add(new Student("S103", "송준섭", "화학공학과", "9906081891234"));
+            studentsArray.add(new Student("S104", "이수찬", "기계공학과", "9808161765432"));
+            studentsArray.add(new Student("S105", "조진혁", "항공우주공학과", "0111301321987"));
         
             //Professor(String Pnum, String RSnum,String ProfName,String Major)
-            professorsArray.add(new Professor("P101", "1111111111113", "김김김", "컴퓨터소프트웨어공학과"));
-            professorsArray.add(new Professor("P111", "1111111111101", "김김김", "컴퓨터소프트웨어공학과"));
-            professorsArray.add(new Professor("P102", "1111111111114", "이이이", "컴퓨터소프트웨어공학과"));
+            professorsArray.add(new Professor("P101", "6705151467913", "홍길동", "전산학과"));
+            professorsArray.add(new Professor("P102", "6507141235689", "김철수", "기계공학과"));
+            professorsArray.add(new Professor("P103", "6802192946173", "홍길순", "항공우주공학과"));
             
             //HEmployee(String name, String number, String residentnumber) 
-            hEmployeesArray.add(new HEmployee("관리자", "H300", "1111111111115"));
-            hEmployeesArray.add(new HEmployee("관리자2", "H301", "1111111111116"));
+            hEmployeesArray.add(new HEmployee("H관리자1", "H101", "8905172947613"));
+            hEmployeesArray.add(new HEmployee("H관리자2", "H201", "9112131528461"));
             
             // GEmployee(String idNumber, String name, String residentNumber) 
-            gEmployeesArray.add(new GEmployee("G101", "관리자", "1111111111117"));
-            gEmployeesArray.add(new GEmployee("G102", "관리자2", "1111111111118"));
+            gEmployeesArray.add(new GEmployee("G101", "G관리자1", "8702232661843"));
+            gEmployeesArray.add(new GEmployee("G102", "G관리자2", "9409191512346"));
             
             //Lecture(String LectName, String Major, String Introduction, String LectNum, int Credit, int Min, int Max, double Tuition, Professor professor)
-            lecturesArray.add(new Lecture("객체지향2", "컴퓨터소프트웨어", "객체", "10382", 4, 12, 30, 400000, professorsArray.get(0)));
-            lecturesArray.add(new Lecture("객체지향3", "컴퓨터소프트웨어", "객체", "10386", 4, 12, 30, 600000, professorsArray.get(1)));
+            lecturesArray.add(new Lecture("전산개론", "전산학과", "전산 개념에 대한 강의", "20213", 3, 1, 3, 400000, professorsArray.get(0)));
+            lecturesArray.add(new Lecture("기계구조", "기계공학과", "기계 구조에 대한 강의", "20425", 4, 1, 4, 600000, professorsArray.get(1)));
         }catch(Exception e){
             System.err.println(e);
         }
